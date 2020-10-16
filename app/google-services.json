@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1037324501460",
+    "firebase_url": "https://prosofi-ea89e.firebaseio.com",
+    "project_id": "prosofi-ea89e",
+    "storage_bucket": "prosofi-ea89e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037324501460:android:da18559d445f1981f21641",
+        "android_client_info": {
+          "package_name": "com.example.aplicacionpermisos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1037324501460-nh1pajqd4i2kpstc12145h1cvgqhtkpp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmreW8oZfkqi1oyNFjs3BLpiwe-ya1O7g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1037324501460-nh1pajqd4i2kpstc12145h1cvgqhtkpp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
