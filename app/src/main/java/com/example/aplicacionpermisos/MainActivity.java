@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(MainActivity.this,
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    Intent i = new Intent(getApplicationContext(), LocationDisplayActivity.class);
+                    Intent i = new Intent(getApplicationContext(), MapDisplayActivity.class);
                     startActivity(i);
                 } else {
                     requestStoragePermission();

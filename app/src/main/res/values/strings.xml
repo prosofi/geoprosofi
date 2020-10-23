@@ -1,15 +1,16 @@
 <resources>
     <string name="app_name"> Geo-Prosofi</string>
-    <string name="datos1">Hola! Al presionar el botón de abajo, encenderás tu GPS para poder conocer
-        tu ubicación exacta. Se mostrará automáticamente tu latitud y longitud, por favor escribe
-        tu nombre (o el nombre de la entidad que representas) la dirección que quedará registrada
-        ennuestros archivos y el barrio. \nPolítica de tratamiento de datos:\nLa información
-        recolectada por esta aplicación solo será utilizada por el Programa Social PROSOFI para
-        sus fines académicos. PROSOFI seguirá la
+    <string name="datos1">GeoProsofi es una aplicación que ayudará a geo-localizar puntos de
+        interés en tu territorio.  Con esta información, Prosofi hará mapas temáticos que le
+        servirán a tu barrio y a tu UPZ. Para registrar un punto debes ubicarte en dicho lugar
+        y tener posibilidad de datos. </string>
+
+
+    <string name="tratamiento">\n La información registrada es anónima. PROSOFI seguirá la
         <a href="https://www.javeriana.edu.co/documents/15832/0/Manual+de+Procedimientos+de+Protecci%C3%B3n+de+Datos+Personales/e9cb83e8-2728-4ee2-ae20-e76bc4d886a5">
             Política de tratamiento de datos</a> de la Pontificia Universidad Javeriana.\n
     Al escribir su información en el aplicativo aceptará que PROSOFI la utilice con los fines
         mencionados, por lo tanto, usted se compromete a ser veraz con los datos registrados.</string>
 
-    <string name="datos">asldfn</string>
+
 </resources>
