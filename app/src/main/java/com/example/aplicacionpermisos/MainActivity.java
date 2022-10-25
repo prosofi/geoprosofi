@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,12 +19,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class MainActivity extends AppCompatActivity {
     private int LOCATION_PERMISSION_CODE = 1;
     private TextView textDatos;
     private CheckBox checkBox;
     private Button buttonRequest;
     private ScrollView sv;
+
+    //Tests
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    public static final String PATH_ENTIDADES="entidades/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
         sv =  findViewById(R.id.scrollviewmain);
 
         buttonRequest.setVisibility(View.GONE);
+
+        //Tests
+        database = FirebaseDatabase.getInstance();
+        //loadEntidades();
 
 
 
@@ -68,13 +85,34 @@ public class MainActivity extends AppCompatActivity {
                 if (ContextCompat.checkSelfPermission(MainActivity.this,
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     Intent i = new Intent(getApplicationContext(), MapDisplayActivity.class);
-                    startActivity(i);
+                    loadEntidades();
+                    //startActivity(i);
                 } else {
                     requestStoragePermission();
                 }
             }
         });
     }
+    //Tests
+    private void loadEntidades() {
+        myRef = database.getReference(PATH_ENTIDADES);
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                    Entidad entidad = singleSnapshot.getValue(Entidad.class);
+                    Log.i("TEST", "Encontró entidad: " + entidad.getNombre());
+                    Toast.makeText(MainActivity.this, "Se encontraron los datos", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("TEST", "error en la consulta", databaseError.toException());
+            }
+        });
+    }
+
+
 
     private void requestStoragePermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,

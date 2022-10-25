@@ -311,7 +311,8 @@ public class LocationDisplayActivity extends AppCompatActivity {
     // agrega la informacion que metio el usuario a la url
     private String makeURLString(){
         // esta url deberia cambiar
-        String service ="https://us-central1-prosofi-ea89e.cloudfunctions.net/saveLocation?";
+        String service = "https://prosofi-ea89e.firebaseio.com/";
+        //String service ="https://us-central1-prosofi-ea89e.cloudfunctions.net/saveLocation?";
         String url = "";
 
         try {
