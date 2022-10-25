@@ -24,7 +24,7 @@ public class GraciasActivity extends AppCompatActivity {
         backbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MapDisplayActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -39,6 +39,7 @@ public class GraciasActivity extends AppCompatActivity {
 
 
         String nombre = getIntent().getExtras().getString("nombre");
+        String nombreRegistrador = getIntent().getExtras().getString("nombreRegistrador");
         String barrio = getIntent().getExtras().getString("barrio");
         String direccion = getIntent().getExtras().getString("direccion");
         String latitud = getIntent().getExtras().getString("latitud");
@@ -46,9 +47,11 @@ public class GraciasActivity extends AppCompatActivity {
 
         MultiAutoCompleteTextView tv = findViewById(R.id.textGracias);
 
-        tv.setText("Ha sido registrado exitosamente!\nNombre: " + nombre + "\nbarrio: " + barrio +
+        String text = "Ha sido registrado exitosamente!\nNombre de la entidad: " + nombre +"\nNombre del registrador: "+nombreRegistrador+
+                "\nBarrio: " + barrio +
                 "\nDirección: "+ direccion + "\nLatitud: " + latitud +"\nLongitud: " + longitud  +
                 "\nPuede agregar otro punto seleccionando la opción de volver."
-                +"\n\nSi no va a agregar más puntos, ya puede desinstalar la aplicación");
+                +"\n\nSi no va a agregar más puntos, ya puede desinstalar la aplicación";
+        tv.setText(text);
     }
 }

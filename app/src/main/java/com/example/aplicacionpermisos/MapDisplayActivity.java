@@ -20,12 +20,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -49,10 +44,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 public class MapDisplayActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -65,11 +59,16 @@ public class MapDisplayActivity extends AppCompatActivity implements OnMapReadyC
     private TextView textViewLongitud;
     private Button buttonSend;
     private double latitud, longitud;
-    private EditText editDireccion, editNombre, editBarrio;
+    private EditText editDireccion, editNombre, editBarrio, editNombreRegistrador;
     private MapsFragment mapsFragment;
     private MapView mapView;
     private LatLng lastLocation ;
     private GoogleMap map;
+
+    //Firebase conexion
+    public static final String PATH_ENTIDADES="entidades/";
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +80,7 @@ public class MapDisplayActivity extends AppCompatActivity implements OnMapReadyC
         editBarrio = findViewById(R.id.textoBarrio);
         editDireccion = findViewById(R.id.textoDireccion);
         editNombre = findViewById(R.id.textoNombre);
+        editNombreRegistrador = findViewById(R.id.textoNombreRegistrador);
 
         buttonSend = findViewById(R.id.buttonRefresh);
 
@@ -101,6 +101,9 @@ public class MapDisplayActivity extends AppCompatActivity implements OnMapReadyC
 
 
         ///////
+
+        //FIREBASE CONEXION
+        database = FirebaseDatabase.getInstance();
 
 
         if (ContextCompat.checkSelfPermission(MapDisplayActivity.this,
@@ -162,8 +165,6 @@ public class MapDisplayActivity extends AppCompatActivity implements OnMapReadyC
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(MapDisplayActivity.this);
                 builder.setTitle(R.string.app_name);
                 builder.setMessage("Está a punto de enviar esta información ¿Está seguro de que" +
@@ -173,8 +174,18 @@ public class MapDisplayActivity extends AppCompatActivity implements OnMapReadyC
                 builder.setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
-                        sendRequest();
-
+                        //sendRequest();
+                        if(enviarDatos())
+                        {
+                            Intent i = new Intent(MapDisplayActivity.this, GraciasActivity.class);
+                            i.putExtra("direccion", editDireccion.getText().toString());
+                            i.putExtra("nombre", editNombre.getText().toString());
+                            i.putExtra("nombreRegistrador", editNombreRegistrador.getText().toString());
+                            i.putExtra("barrio", editBarrio.getText().toString());
+                            i.putExtra("latitud", String.valueOf(latitud));
+                            i.putExtra("longitud", String.valueOf(longitud));
+                            startActivity(i);
+                        }
                     }
                 });
                 builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -271,6 +282,7 @@ public class MapDisplayActivity extends AppCompatActivity implements OnMapReadyC
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Permission GRANTED", Toast.LENGTH_SHORT).show();
@@ -315,6 +327,44 @@ public class MapDisplayActivity extends AppCompatActivity implements OnMapReadyC
     }
 
 
+
+    //Método para enviar datos ACTUALIZADO 25-10-2022
+    private boolean enviarDatos()
+    {
+        //Obtenemos los datos de los EditText
+        String nombre = editNombre.getText().toString();
+        String nombreRegistrador = editNombreRegistrador.getText().toString();
+        String barrio = editBarrio.getText().toString();
+        String direccion = editDireccion.getText().toString();
+        String latitud = textViewLatitud.getText().toString();
+        String longitud = textViewLongitud.getText().toString();
+
+        //Verificamos que los campos no estén vacíos
+       if(nombre.isEmpty() || barrio.isEmpty() || direccion.isEmpty() || latitud.isEmpty() || longitud.isEmpty())
+        {
+            Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+       //Crear objeto de la clase Entidad y subirlo a la BD
+        myRef = database.getReference(PATH_ENTIDADES);
+        String key = myRef.push().getKey();
+        Entidad nuevaEntidad = new Entidad();
+        nuevaEntidad.setNombre(nombre);
+        nuevaEntidad.setNombreRegistrador(nombreRegistrador);
+        nuevaEntidad.setBarrio(barrio);
+        nuevaEntidad.setDireccion(direccion);
+        nuevaEntidad.setLatitud(latitud);
+        nuevaEntidad.setLongitud(longitud);
+        myRef=database.getReference(PATH_ENTIDADES+key);
+        myRef.setValue(nuevaEntidad);
+        //Toast.makeText(this, "Nueva entidad creada correctamente con el código "+key, Toast.LENGTH_SHORT).show();
+        Log.i("TEST", "enviarDatos: "+key);
+        return true;
+
+    }
+
+    /*
     // envia la peticion al web service
     private boolean sendRequest() {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -390,6 +440,7 @@ public class MapDisplayActivity extends AppCompatActivity implements OnMapReadyC
 
 
     }
+     */
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

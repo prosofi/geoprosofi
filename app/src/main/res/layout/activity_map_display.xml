@@ -71,26 +71,37 @@
                 android:id="@+id/textoNombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 app:layout_constraintStart_toEndOf="@+id/label"
                 app:layout_constraintTop_toTopOf="@+id/label" />
+
+            <EditText
+                android:id="@+id/textoNombreRegistrador"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toEndOf="@+id/label2"
+                app:layout_constraintTop_toTopOf="@+id/label2" />
 
             <TextView
                 android:id="@+id/label"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="Descripción del punto a registrar"
+                android:text="Nombre de la entidad a registrar"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/labelLongitud" />
 
             <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
+                android:id="@+id/label2"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="Dirección"
+                android:layout_marginTop="15dp"
+                android:text="Nombre del registrador"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/label" />
 
@@ -100,17 +111,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                app:layout_constraintStart_toStartOf="@+id/textoNombre"
+                app:layout_constraintStart_toStartOf="@+id/textoNombreRegistrador"
                 app:layout_constraintTop_toTopOf="@+id/textView6" />
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="Barrio"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
             <EditText
                 android:id="@+id/textoBarrio"
@@ -120,6 +122,24 @@
                 android:inputType="textPersonName"
                 app:layout_constraintStart_toStartOf="@+id/textoDireccion"
                 app:layout_constraintTop_toTopOf="@+id/textView7" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="Barrio"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Dirección"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/label2" />
 
             <TextView
                 android:id="@+id/textView2"

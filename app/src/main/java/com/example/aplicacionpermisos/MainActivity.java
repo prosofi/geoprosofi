@@ -32,10 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonRequest;
     private ScrollView sv;
 
-    //Tests
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
-    public static final String PATH_ENTIDADES="entidades/";
 
 
     @Override
@@ -49,10 +45,6 @@ public class MainActivity extends AppCompatActivity {
         sv =  findViewById(R.id.scrollviewmain);
 
         buttonRequest.setVisibility(View.GONE);
-
-        //Tests
-        database = FirebaseDatabase.getInstance();
-        //loadEntidades();
 
 
 
@@ -85,34 +77,13 @@ public class MainActivity extends AppCompatActivity {
                 if (ContextCompat.checkSelfPermission(MainActivity.this,
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     Intent i = new Intent(getApplicationContext(), MapDisplayActivity.class);
-                    loadEntidades();
-                    //startActivity(i);
+                    startActivity(i);
                 } else {
                     requestStoragePermission();
                 }
             }
         });
     }
-    //Tests
-    private void loadEntidades() {
-        myRef = database.getReference(PATH_ENTIDADES);
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
-                    Entidad entidad = singleSnapshot.getValue(Entidad.class);
-                    Log.i("TEST", "Encontró entidad: " + entidad.getNombre());
-                    Toast.makeText(MainActivity.this, "Se encontraron los datos", Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("TEST", "error en la consulta", databaseError.toException());
-            }
-        });
-    }
-
-
 
     private void requestStoragePermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
@@ -144,7 +115,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode,  String[] permissions,  int[] grantResults) {
-        if (requestCode == LOCATION_PERMISSION_CODE)  {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Permission GRANTED", Toast.LENGTH_SHORT).show();
             } else {
