@@ -60,7 +60,7 @@ public class MapDisplayActivity extends AppCompatActivity implements OnMapReadyC
     private Button buttonSend;
     private double latitud, longitud;
     private EditText editDireccion, editNombre, editBarrio, editNombreRegistrador;
-    private MapsFragment mapsFragment;
+    //private MapsFragment mapsFragment;
     private MapView mapView;
     private LatLng lastLocation ;
     private GoogleMap map;

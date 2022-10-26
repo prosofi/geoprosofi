@@ -28,7 +28,6 @@
 
         <activity android:name=".GraciasActivity"
             android:exported="true"/>
-        <activity android:name=".LocationDisplayActivity" />
         <activity android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
